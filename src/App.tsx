@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import SearchForm from './components/SearchForm';
-import ResultsComponent from './components/SearchResults';
 import FilmCards from './components/FilmCards';
 import { fetchFilmData } from './services/ApiService';
 import { Film } from './components/types/types';
+import ResultsComponent from './components/SearchResults';
 import ErrorBoundary from './components/ErrorBoundary';
 
 interface AppProps {}
@@ -21,7 +21,7 @@ class App extends Component<AppProps, AppState> {
     this.state = {
       searchTerm: '',
       searchResults: [],
-      loading: false,
+      loading: true,
       error: null,
     };
   }
@@ -41,9 +41,14 @@ class App extends Component<AppProps, AppState> {
       this.setState({
         searchTerm: '',
         searchResults: films,
+        loading: false,
       });
     } catch (error) {
       console.error('Error fetching all films:', error);
+      this.setState({
+        loading: false,
+        error: error as Error,
+      });
     }
   };
 
@@ -78,7 +83,7 @@ class App extends Component<AppProps, AppState> {
 
     return (
       <ErrorBoundary>
-        <div className="search-box">
+        <div>
           <h1>Star Wars Films</h1>
           <SearchForm
             searchTerm={this.state.searchTerm}
@@ -86,18 +91,28 @@ class App extends Component<AppProps, AppState> {
           />
 
           {loading ? (
-            <p>Loading...</p> // Display loading message here
+            <p className="loading">Loading... Your adventure begins shortly!</p>
           ) : (
             <div>
-              {searchTerm && searchResults.length > 0 ? (
-                <ResultsComponent
-                  results={searchResults.map((film) => ({
-                    name: film.title,
-                    description: film.opening_crawl,
-                  }))}
-                />
-              ) : null}
-              <FilmCards films={searchResults} />
+              {searchTerm ? (
+                <div>
+                  {searchResults.length > 0 ? (
+                    <>
+                      <ResultsComponent
+                        results={searchResults.map((film) => ({
+                          name: film.title,
+                          description: film.opening_crawl,
+                        }))}
+                      />
+                      <FilmCards films={searchResults} />
+                    </>
+                  ) : (
+                    <p className="not-found">Not Found</p>
+                  )}
+                </div>
+              ) : (
+                <FilmCards films={searchResults} />
+              )}
             </div>
           )}
         </div>

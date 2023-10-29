@@ -25,7 +25,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div>
+        <div className="errorBoundary-box">
           <h1>Something went wrong.</h1>
           <button onClick={this.triggerError}>Trigger Error</button>
         </div>

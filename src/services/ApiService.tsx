@@ -4,12 +4,11 @@ export async function fetchFilmData(searchQuery: string): Promise<Film[]> {
   try {
     const apiUrl = `https://swapi.dev/api/films/?search=${searchQuery}`;
     const response = await fetch(apiUrl);
-    console.log(response);
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    console.log('Response status:', response.status);
+
     const data = await response.json();
     console.log(data);
 

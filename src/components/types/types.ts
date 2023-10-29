@@ -8,6 +8,7 @@ export interface Film {
   species: string[];
   characters: string[];
   planets: string[];
+  url: string;
 }
 
 export interface FilmCardsProps {

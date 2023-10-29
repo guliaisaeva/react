@@ -4,6 +4,7 @@ import ResultsComponent from './components/SearchResults';
 import FilmCards from './components/FilmCards';
 import { fetchFilmData } from './services/ApiService';
 import { Film } from './components/types/types';
+import ErrorBoundary from './components/ErrorBoundary';
 
 interface AppProps {}
 
@@ -38,6 +39,7 @@ class App extends Component<AppProps, AppState> {
     try {
       const films: Film[] = await fetchFilmData('');
       this.setState({
+        searchTerm: '',
         searchResults: films,
       });
     } catch (error) {
@@ -47,7 +49,7 @@ class App extends Component<AppProps, AppState> {
 
   handleSearch = (searchTerm: string) => {
     localStorage.setItem('searchTerm', searchTerm);
-    this.setState({ searchTerm });
+
     this.search(searchTerm);
   };
 
@@ -75,17 +77,17 @@ class App extends Component<AppProps, AppState> {
     const { searchResults, searchTerm, loading } = this.state;
 
     return (
-      <div>
-        {loading ? ( // Display loading message for the entire content inside the <div>
-          <p>Loading...</p>
-        ) : (
-          <>
-            <h1>Star Wars Films</h1>
-            <SearchForm
-              searchTerm={this.state.searchTerm}
-              onSearch={this.handleSearch}
-            />
+      <ErrorBoundary>
+        <h1>Star Wars Films</h1>
+        <SearchForm
+          searchTerm={this.state.searchTerm}
+          onSearch={this.handleSearch}
+        />
 
+        {loading ? (
+          <p>Loading...</p> // Display loading message here
+        ) : (
+          <div>
             {searchTerm && searchResults.length > 0 ? (
               <ResultsComponent
                 results={searchResults.map((film) => ({
@@ -95,9 +97,9 @@ class App extends Component<AppProps, AppState> {
               />
             ) : null}
             <FilmCards films={searchResults} />
-          </>
+          </div>
         )}
-      </div>
+      </ErrorBoundary>
     );
   }
 }

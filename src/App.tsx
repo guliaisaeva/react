@@ -78,27 +78,29 @@ class App extends Component<AppProps, AppState> {
 
     return (
       <ErrorBoundary>
-        <h1>Star Wars Films</h1>
-        <SearchForm
-          searchTerm={this.state.searchTerm}
-          onSearch={this.handleSearch}
-        />
+        <div className="search-box">
+          <h1>Star Wars Films</h1>
+          <SearchForm
+            searchTerm={this.state.searchTerm}
+            onSearch={this.handleSearch}
+          />
 
-        {loading ? (
-          <p>Loading...</p> // Display loading message here
-        ) : (
-          <div>
-            {searchTerm && searchResults.length > 0 ? (
-              <ResultsComponent
-                results={searchResults.map((film) => ({
-                  name: film.title,
-                  description: film.opening_crawl,
-                }))}
-              />
-            ) : null}
-            <FilmCards films={searchResults} />
-          </div>
-        )}
+          {loading ? (
+            <p>Loading...</p> // Display loading message here
+          ) : (
+            <div>
+              {searchTerm && searchResults.length > 0 ? (
+                <ResultsComponent
+                  results={searchResults.map((film) => ({
+                    name: film.title,
+                    description: film.opening_crawl,
+                  }))}
+                />
+              ) : null}
+              <FilmCards films={searchResults} />
+            </div>
+          )}
+        </div>
       </ErrorBoundary>
     );
   }

@@ -29,13 +29,12 @@ class SearchComponent extends Component<
 
   render() {
     return (
-      <div style={{ background: 'red' }}>
+      <div className="searchform-box">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Enter Film Name"
           value={this.state.searchTerm}
           onChange={this.handleInputChange}
-          style={{ padding: '10px 0', borderRadius: '6px' }}
         />
         <button onClick={this.handleSearchClick}>Search</button>
       </div>

@@ -1,6 +1,7 @@
-export async function fetchFilmData(searchQuery: string): Promise<any> {
+import { Film } from '../components/types/types';
+
+export async function fetchFilmData(searchQuery: string): Promise<Film[]> {
   try {
-    // Modify the URL to include the search query
     const apiUrl = `https://swapi.dev/api/films/?search=${searchQuery}`;
     const response = await fetch(apiUrl);
 

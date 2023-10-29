@@ -1,42 +1,46 @@
 import React, { Component } from 'react';
 
-interface Props {
-  onSearch: (query: string) => void;
+interface SearchComponentProps {
+  searchTerm: string;
+  onSearch: (searchTerm: string) => void;
 }
 
-interface State {
-  searchQuery: string;
+interface SearchComponentState {
+  searchTerm: string;
 }
 
-class SearchBar extends Component<Props, State> {
-  constructor(props: Props) {
+class SearchComponent extends Component<
+  SearchComponentProps,
+  SearchComponentState
+> {
+  constructor(props: SearchComponentProps) {
     super(props);
-    this.state = {
-      searchQuery: '',
-    };
+    this.state = { searchTerm: this.props.searchTerm };
   }
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchQuery: event.target.value });
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ searchTerm: e.target.value });
   };
 
-  handleSearch = () => {
-    this.props.onSearch(this.state.searchQuery);
+  handleSearchClick = () => {
+    const searchTerm = this.state.searchTerm.trim();
+    this.props.onSearch(searchTerm);
   };
 
   render() {
     return (
-      <div>
+      <div style={{ background: 'red' }}>
         <input
           type="text"
-          placeholder="Search Films"
-          value={this.state.searchQuery}
+          placeholder="Search..."
+          value={this.state.searchTerm}
           onChange={this.handleInputChange}
+          style={{ padding: '10px 0', borderRadius: '6px' }}
         />
-        <button onClick={this.handleSearch}>Search</button>
+        <button onClick={this.handleSearchClick}>Search</button>
       </div>
     );
   }
 }
 
-export default SearchBar;
+export default SearchComponent;

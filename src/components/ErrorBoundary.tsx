@@ -19,7 +19,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   triggerError = () => {
-    throw new Error('This is a test error.');
+    try {
+      throw new Error('This is a error.  Please look at you console');
+    } catch (error) {
+      alert('Error: ' + (error as Error).message);
+    }
   };
 
   render() {

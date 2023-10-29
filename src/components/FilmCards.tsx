@@ -11,7 +11,6 @@ class FilmCards extends Component<FilmCardsProps> {
 
     return (
       <div>
-        <h1>Star Wars Films</h1>
         <div className="card-container">
           {films.map((film, index) => (
             <div key={index} className="card">

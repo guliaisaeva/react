@@ -6,7 +6,8 @@ export interface Film {
   producer: string;
   opening_crawl: string;
   species: string[];
-  // Add other properties as needed
+  characters: string[];
+  planets: string[];
 }
 
 export interface FilmCardsProps {

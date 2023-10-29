@@ -1,6 +1,5 @@
 import React, { Component, ReactNode } from 'react';
 
-// Define TypeScript types for props and state
 interface ErrorBoundaryProps {
   children: ReactNode;
 }

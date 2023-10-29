@@ -1,23 +1,27 @@
 import { Component } from 'react';
 
-interface SearchResultsProps {
-  results: string[]; // Replace with the actual type of your search results
+interface ResultsComponentProps {
+  results: Array<{ name: string; description: string }>;
 }
 
-class SearchResults extends Component<SearchResultsProps> {
+class ResultsComponent extends Component<ResultsComponentProps> {
   render() {
     const { results } = this.props;
 
     return (
-      <div className="SearchResults">
-        {results.map((result, index) => (
-          <div key={index} className="SearchResultCard">
-            {result}
-          </div>
-        ))}
+      <div>
+        {results.length === 0 && <p>No results found.</p>}
+        <ul>
+          {results.map((result, index) => (
+            <li key={index}>
+              <h3>{result.name}</h3>
+              <p>{result.description}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
 }
 
-export default SearchResults;
+export default ResultsComponent;

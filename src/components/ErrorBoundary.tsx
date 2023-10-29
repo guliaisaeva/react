@@ -1,26 +1,36 @@
-import { Component, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 
-// Define a TypeScript type for the props
+// Define TypeScript types for props and state
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-class ErrorBoundary extends Component<ErrorBoundaryProps> {
-  state = {
-    hasError: false,
-  };
-
-  componentDidCatch(error: Error) {
-    this.setState({ hasError: true });
-
-    // You can log the error to the console here
-    console.error(error);
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
   }
+
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error(error, info);
+    this.setState({ hasError: true });
+  }
+
+  triggerError = () => {
+    throw new Error('This is a test error.');
+  };
 
   render() {
     if (this.state.hasError) {
-      // Display a fallback UI for errors
-      return <div> Error occurred. Please try again.</div>;
+      return (
+        <div>
+          <h1>Something went wrong.</h1>
+          <button onClick={this.triggerError}>Trigger Error</button>
+        </div>
+      );
     }
     return this.props.children;
   }

@@ -120,5 +120,4 @@ class App extends Component<AppProps, AppState> {
     );
   }
 }
-
 export default App;

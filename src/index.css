@@ -62,8 +62,7 @@ button:focus-visible {
 /* card componenet styles  */
 
 .card-container {
-  width: 90%;
-  padding: 0 2rem;
+  width: 100%;
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -73,12 +72,14 @@ button:focus-visible {
 
 .card-container .card {
   flex: 1;
-  max-width: calc(25% - 16px);
+  max-width: calc(20% - 16px);
+  height: 250px;
   border: 1px solid #ddd;
   padding: 16px;
   box-sizing: border-box;
   margin: 1rem 0;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  text-align: justify;
 }
 
 .loading {
@@ -110,4 +111,17 @@ button:focus-visible {
   text-align: center;
   font-family: 1.5rem;
   font-weight: 700;
+}
+
+.pagination-box {
+  text-align: center;
+  margin-top: 2rem;
+}
+.pagination-box button {
+  background-color: #134441;
+  color: #d6eef2;
+  border: none;
+  border-radius: 10%;
+  padding: 8px;
+  margin: 5px;
 }

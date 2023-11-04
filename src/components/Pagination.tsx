@@ -10,7 +10,7 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   return (
-    <div>
+    <div className="pagination-box">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}

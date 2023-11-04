@@ -1,45 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 interface SearchComponentProps {
   searchTerm: string;
   onSearch: (searchTerm: string) => void;
 }
 
-interface SearchComponentState {
-  searchTerm: string;
-}
+const SearchComponent: React.FC<SearchComponentProps> = ({
+  searchTerm,
+  onSearch,
+}) => {
+  const [searchTermState, setSearchTermState] = useState<string>(searchTerm);
 
-class SearchComponent extends Component<
-  SearchComponentProps,
-  SearchComponentState
-> {
-  constructor(props: SearchComponentProps) {
-    super(props);
-    this.state = { searchTerm: this.props.searchTerm };
-  }
-
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: e.target.value });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTermState(e.target.value);
   };
 
-  handleSearchClick = () => {
-    const searchTerm = this.state.searchTerm.trim();
-    this.props.onSearch(searchTerm);
+  const handleSearchClick = () => {
+    const trimmedSearchTerm = searchTermState.trim();
+    onSearch(trimmedSearchTerm);
   };
 
-  render() {
-    return (
-      <div className="searchform-box">
-        <input
-          type="text"
-          placeholder="Enter Film Name"
-          value={this.state.searchTerm}
-          onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleSearchClick}>Search</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="searchform-box">
+      <input
+        type="text"
+        placeholder="Enter Film Name"
+        value={searchTermState}
+        onChange={handleInputChange}
+      />
+      <button onClick={handleSearchClick}>Search</button>
+    </div>
+  );
+};
 
 export default SearchComponent;

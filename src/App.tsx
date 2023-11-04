@@ -5,12 +5,22 @@ import { fetchFilmData } from './services/ApiService';
 import { Film } from './components/types/types';
 import ResultsComponent from './components/SearchResults';
 import ErrorBoundary from './components/ErrorBoundary';
+import Pagination from './components/Pagination';
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Film[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = searchResults.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   useEffect(() => {
     const savedSearchTerm = localStorage.getItem('searchTerm');
@@ -74,15 +84,21 @@ const App: React.FC = () => {
                         description: film.opening_crawl,
                       }))}
                     />
-                    <FilmCards films={searchResults} />
+                    <FilmCards films={itemsToDisplay} />
                   </>
                 ) : (
                   <p className="not-found">Not Found</p>
                 )}
               </div>
             ) : (
-              <FilmCards films={searchResults} />
+              <FilmCards films={itemsToDisplay} />
             )}
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(searchResults.length / itemsPerPage)}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
 

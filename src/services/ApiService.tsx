@@ -10,7 +10,6 @@ export async function fetchFilmData(searchQuery: string): Promise<Film[]> {
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (data.results && Array.isArray(data.results)) {
       return data.results as Film[];

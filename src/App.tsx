@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from './components/SearchForm';
 import FilmCards from './components/FilmCards';
 import { fetchFilmData } from './services/ApiService';
@@ -6,118 +6,90 @@ import { Film } from './components/types/types';
 import ResultsComponent from './components/SearchResults';
 import ErrorBoundary from './components/ErrorBoundary';
 
-interface AppProps {}
+const App: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Film[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
-interface AppState {
-  searchTerm: string;
-  searchResults: Film[];
-  loading: boolean;
-  error: Error | null;
-}
-
-class App extends Component<AppProps, AppState> {
-  constructor(props: AppProps) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      searchResults: [],
-      loading: true,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const savedSearchTerm = localStorage.getItem('searchTerm');
     if (savedSearchTerm) {
-      this.setState({ searchTerm: savedSearchTerm || '' });
-      this.search(savedSearchTerm);
+      setSearchTerm(savedSearchTerm);
+      search(savedSearchTerm);
     } else {
-      this.fetchAllFilms();
+      fetchAllFilms();
     }
-  }
-  fetchAllFilms = async () => {
+  }, []);
+
+  const fetchAllFilms = async () => {
     try {
       const films: Film[] = await fetchFilmData('');
-      this.setState({
-        searchTerm: '',
-        searchResults: films,
-        loading: false,
-      });
+      setSearchTerm('');
+      setSearchResults(films);
+      setLoading(false);
     } catch (error) {
-      console.error('Error fetching all films:', error);
-      this.setState({
-        loading: false,
-        error: error as Error,
-      });
+      setLoading(false);
+      setError(error as Error);
     }
   };
 
-  handleSearch = (searchTerm: string) => {
+  const handleSearch = (searchTerm: string) => {
     localStorage.setItem('searchTerm', searchTerm);
-
-    this.search(searchTerm);
+    search(searchTerm);
   };
 
-  search = async (searchTerm: string) => {
-    this.setState({ loading: true });
-
+  const search = async (searchTerm: string) => {
+    setLoading(true);
     try {
       const films: Film[] = await fetchFilmData(searchTerm);
-      this.setState({
-        searchTerm,
-        searchResults: films,
-        loading: false,
-        error: null,
-      });
+      setSearchTerm(searchTerm);
+      setSearchResults(films);
+      setLoading(false);
+      setError(null);
     } catch (error) {
-      this.setState({
-        searchResults: [],
-        loading: false,
-        error: error as Error,
-      });
+      setSearchResults([]);
+      setLoading(false);
+      setError(error as Error);
     }
   };
 
-  render() {
-    const { searchResults, searchTerm, loading } = this.state;
+  return (
+    <ErrorBoundary>
+      <div>
+        <h1>Star Wars Films</h1>
+        <SearchForm searchTerm={searchTerm} onSearch={handleSearch} />
 
-    return (
-      <ErrorBoundary>
-        <div>
-          <h1>Star Wars Films</h1>
-          <SearchForm
-            searchTerm={this.state.searchTerm}
-            onSearch={this.handleSearch}
-          />
+        {loading ? (
+          <p className="loading">Loading... Your adventure begins shortly!</p>
+        ) : (
+          <div>
+            {searchTerm ? (
+              <div>
+                {searchResults.length > 0 ? (
+                  <>
+                    <ResultsComponent
+                      results={searchResults.map((film) => ({
+                        name: film.title,
+                        description: film.opening_crawl,
+                      }))}
+                    />
+                    <FilmCards films={searchResults} />
+                  </>
+                ) : (
+                  <p className="not-found">Not Found</p>
+                )}
+              </div>
+            ) : (
+              <FilmCards films={searchResults} />
+            )}
+          </div>
+        )}
 
-          {loading ? (
-            <p className="loading">Loading... Your adventure begins shortly!</p>
-          ) : (
-            <div>
-              {searchTerm ? (
-                <div>
-                  {searchResults.length > 0 ? (
-                    <>
-                      <ResultsComponent
-                        results={searchResults.map((film) => ({
-                          name: film.title,
-                          description: film.opening_crawl,
-                        }))}
-                      />
-                      <FilmCards films={searchResults} />
-                    </>
-                  ) : (
-                    <p className="not-found">Not Found</p>
-                  )}
-                </div>
-              ) : (
-                <FilmCards films={searchResults} />
-              )}
-            </div>
-          )}
-        </div>
-      </ErrorBoundary>
-    );
-  }
-}
+        {error && <p className="error-message">Error: {error.message}</p>}
+      </div>
+    </ErrorBoundary>
+  );
+};
+
 export default App;

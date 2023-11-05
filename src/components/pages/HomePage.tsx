@@ -3,17 +3,41 @@ import SearchForm from '../SearchForm';
 import FilmCards from '../FilmCards';
 import { fetchFilmData } from '../../services/ApiService';
 import { Film } from '../types/types';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Pagination from '../Pagination';
 import FilmDetailsComponent from '../pages/FilmDetails';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function HomePage() {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(queryParams.get('page') || '1', 10)
+  );
+  const [itemsPerPage] = useState(
+    parseInt(queryParams.get('itemsPerPage') || '3', 10)
+  );
+
   const [searchResults, setSearchResults] = useState<Film[]>([]);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set('page', currentPage.toString());
+
+    navigate(`?${params.toString()}`);
+  }, [currentPage, itemsPerPage, navigate]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToDisplay = searchResults.slice(startIndex, endIndex);
@@ -21,10 +45,6 @@ function HomePage() {
 
   const handleFilmCardClick = (film: Film) => {
     setSelectedFilm(film);
-  };
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
   };
 
   useEffect(() => {
@@ -42,6 +62,7 @@ function HomePage() {
       const films: Film[] = await fetchFilmData('');
       setSearchTerm('');
       setSearchResults(films);
+      setTotalItems(films.length);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -60,10 +81,13 @@ function HomePage() {
       const films: Film[] = await fetchFilmData(searchTerm);
       setSearchTerm(searchTerm);
       setSearchResults(films);
+      setTotalItems(films.length);
       setLoading(false);
       setError(null);
+      setSelectedFilm(null);
     } catch (error) {
       setSearchResults([]);
+      setTotalItems(0);
       setLoading(false);
       setError(error as Error);
     }
@@ -71,44 +95,45 @@ function HomePage() {
 
   return (
     <ErrorBoundary>
-      <div>
+      <div className="page-container">
         <h1>Star Wars Films</h1>
         <SearchForm searchTerm={searchTerm} onSearch={handleSearch} />
-
-        {loading ? (
-          <p className="loading">Loading... Your adventure begins shortly!</p>
-        ) : (
-          <div>
-            {searchTerm ? (
-              <div>
+        <div className="content-container ">
+          <div className="film-list ">
+            {loading ? (
+              <p className="loading">
+                Loading... Your adventure begins shortly!
+              </p>
+            ) : (
+              <div className="main-box">
                 {searchResults.length > 0 ? (
-                  <>
-                    <FilmCards
-                      films={itemsToDisplay}
-                      onFilmCardClick={handleFilmCardClick}
+                  <div>
+                    <div className="card-container">
+                      <FilmCards
+                        films={itemsToDisplay}
+                        onFilmCardClick={handleFilmCardClick}
+                      />
+                    </div>
+                    <Pagination
+                      currentPage={currentPage}
+                      itemsPerPage={itemsPerPage}
+                      totalItems={totalItems}
+                      onPageChange={handlePageChange}
                     />
-                    {selectedFilm && (
-                      <FilmDetailsComponent film={selectedFilm} />
-                    )}
-                  </>
+                  </div>
                 ) : (
-                  <p className="not-found">Not Found</p>
+                  <p className="not-found">Sorry, Not Found</p>
                 )}
               </div>
-            ) : (
-              <FilmCards
-                films={itemsToDisplay}
-                onFilmCardClick={handleFilmCardClick}
-              />
             )}
-
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(searchResults.length / itemsPerPage)}
-              onPageChange={handlePageChange}
-            />
           </div>
-        )}
+          {selectedFilm && (
+            <FilmDetailsComponent
+              film={selectedFilm}
+              onCloseClick={() => setSelectedFilm(null)}
+            />
+          )}
+        </div>
 
         {error && <p className="error-message">Error: {error.message}</p>}
       </div>

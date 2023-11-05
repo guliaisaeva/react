@@ -1,14 +1,20 @@
+import React from 'react';
+
 interface PaginationProps {
   currentPage: number;
-  totalPages: number;
+  itemsPerPage: number;
+  totalItems: number;
   onPageChange: (newPage: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
-  totalPages,
+  itemsPerPage,
+  totalItems,
   onPageChange,
 }) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
   return (
     <div className="pagination-box">
       <button

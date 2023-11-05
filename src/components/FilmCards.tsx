@@ -11,7 +11,11 @@ const FilmCards: React.FC<FilmCardsProps> = ({ films, onFilmCardClick }) => {
   return (
     <div className="card-container">
       {films.map((film, index) => (
-        <Link key={film.episode_id} to={`/details/${film.episode_id}`}>
+        <Link
+          className="card-link"
+          key={film.episode_id}
+          to={`/details/${film.episode_id}`}
+        >
           <div
             key={index}
             className="card"

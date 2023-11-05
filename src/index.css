@@ -165,3 +165,11 @@ button:focus-visible {
   padding: 8px;
   margin: 5px;
 }
+
+.card-link {
+  text-decoration: none;
+  color: #03363d;
+}
+.card-link h2 {
+  color: #134441;
+}

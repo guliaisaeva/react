@@ -2,7 +2,7 @@ import { Film } from '../components/types/types';
 
 export async function fetchFilmData(searchQuery: string): Promise<Film[]> {
   try {
-    const apiUrl = `https://swapi.dev/api/films/?search=${searchQuery}`;
+    const apiUrl = `https://swapi.py4e.com/api/films/?search=${searchQuery}`;
     const response = await fetch(apiUrl);
 
     if (!response.ok) {

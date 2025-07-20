@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 interface SearchComponentProps {
   searchTerm: string;
@@ -9,10 +9,7 @@ interface SearchComponentState {
   searchTerm: string;
 }
 
-class SearchComponent extends Component<
-  SearchComponentProps,
-  SearchComponentState
-> {
+class SearchForm extends Component<SearchComponentProps, SearchComponentState> {
   constructor(props: SearchComponentProps) {
     super(props);
     this.state = { searchTerm: this.props.searchTerm };
@@ -42,4 +39,4 @@ class SearchComponent extends Component<
   }
 }
 
-export default SearchComponent;
+export default SearchForm;

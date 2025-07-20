@@ -4,7 +4,7 @@ interface ResultsComponentProps {
   results: Array<{ name: string; description: string }>;
 }
 
-const ResultsComponent: React.FC<ResultsComponentProps> = ({ results }) => {
+const SearchResults: React.FC<ResultsComponentProps> = ({ results }) => {
   if (results.length === 0) {
     return null;
   }
@@ -28,4 +28,4 @@ const ResultsComponent: React.FC<ResultsComponentProps> = ({ results }) => {
   );
 };
 
-export default ResultsComponent;
+export default SearchResults;

@@ -5,9 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["vitest/globals", "node"],
-
-    /* Bundler mode */
+    "types": ["vitest", "node"],    
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -15,13 +13,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
     "noImplicitAny": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+ "include": ["src", "src/setupTests.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,3 +1,28 @@
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/guliaisaeva/react.git
+cd react
+npm install
+
+```
+### Setup Husky (only once after cloning)
+
+```bash
+npm run prepare
+```
+
+###  Clone the Repository
+```bash
+npm run test
+npm run test:coverage
+
+```
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

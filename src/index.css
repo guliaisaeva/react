@@ -14,7 +14,6 @@ h1 {
   text-align: center;
 }
 
-/* searchForm style */
 
 .search-box {
   background-color: transparent;
@@ -59,7 +58,6 @@ button:focus-visible {
   border-color: #646cff;
 }
 
-/* card componenet styles  */
 
 .card-container {
   width: 90%;
@@ -93,7 +91,6 @@ button:focus-visible {
   margin-top: 2rem;
 }
 
-/* searchresult style */
 .searchresult-box {
   display: flex;
   flex-direction: column;
@@ -110,4 +107,12 @@ button:focus-visible {
   text-align: center;
   font-family: 1.5rem;
   font-weight: 700;
+}
+.error-btn{
+  margin:0 auto;
+  display:flex;
+ justify-content: center;
+ align-items: center;
+ padding: 1rem;
+ border-radius: 0.5rem;
 }

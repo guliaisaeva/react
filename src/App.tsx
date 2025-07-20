@@ -5,6 +5,7 @@ import { fetchFilmData } from './services/ApiService';
 import { Film } from './components/types/types';
 import ResultsComponent from './components/SearchResults';
 import ErrorBoundary from './components/ErrorBoundary';
+import './index.css';
 
 interface AppProps {}
 
@@ -35,6 +36,7 @@ class App extends Component<AppProps, AppState> {
       this.fetchAllFilms();
     }
   }
+
   fetchAllFilms = async () => {
     try {
       const films: Film[] = await fetchFilmData('');
@@ -53,9 +55,9 @@ class App extends Component<AppProps, AppState> {
   };
 
   handleSearch = (searchTerm: string) => {
-    localStorage.setItem('searchTerm', searchTerm);
-
-    this.search(searchTerm);
+    const trimmedTerm = searchTerm.trim();
+    localStorage.setItem('searchTerm', trimmedTerm);
+    this.search(trimmedTerm);
   };
 
   search = async (searchTerm: string) => {
@@ -78,43 +80,52 @@ class App extends Component<AppProps, AppState> {
     }
   };
 
+  throwError = () => {
+    throw new Error('This is a test error triggered by the user.');
+  };
+
   render() {
     const { searchResults, searchTerm, loading } = this.state;
 
     return (
       <ErrorBoundary>
-        <div>
-          <h1>Star Wars Films</h1>
-          <SearchForm
-            searchTerm={this.state.searchTerm}
-            onSearch={this.handleSearch}
-          />
+        <div className="p-6 max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-4">Star Wars Films</h1>
 
-          {loading ? (
-            <p className="loading">Loading... Your adventure begins shortly!</p>
-          ) : (
-            <div>
-              {searchTerm ? (
-                <div>
-                  {searchResults.length > 0 ? (
-                    <>
-                      <ResultsComponent
-                        results={searchResults.map((film) => ({
-                          name: film.title,
-                          description: film.opening_crawl,
-                        }))}
-                      />
-                      <FilmCards films={searchResults} />
-                    </>
-                  ) : (
-                    <p className="not-found">Not Found</p>
-                  )}
-                </div>
+          <div className="mb-8">
+            <SearchForm
+              searchTerm={this.state.searchTerm}
+              onSearch={this.handleSearch}
+            />
+          </div>
+
+          <div>
+            {loading ? (
+              <p className="loading">
+                Loading... Your adventure begins shortly!
+              </p>
+            ) : searchTerm ? (
+              searchResults.length > 0 ? (
+                <>
+                  <ResultsComponent
+                    results={searchResults.map((film) => ({
+                      name: film.title,
+                      description: film.opening_crawl,
+                    }))}
+                  />
+                  <FilmCards films={searchResults} />
+                </>
               ) : (
-                <FilmCards films={searchResults} />
-              )}
-            </div>
-          )}
+                <p className="not-found">Not Found</p>
+              )
+            ) : (
+              <FilmCards films={searchResults} />
+            )}
+          </div>
+
+          <button className="error-btn" onClick={this.throwError}>
+            Trigger Error
+          </button>
         </div>
       </ErrorBoundary>
     );

@@ -85,8 +85,18 @@ class App extends Component<AppProps, AppState> {
   };
 
   render() {
-    const { searchResults, searchTerm, loading } = this.state;
-
+    const { searchResults, searchTerm, loading, error } = this.state;
+    if (error) {
+      return (
+        <div className="p-6 max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-4">Star Wars Films</h1>
+          <div role="alert" style={{ color: 'red' }}>
+            <h2>Error:</h2>
+            <p>{error.message}</p>
+          </div>
+        </div>
+      );
+    }
     return (
       <ErrorBoundary>
         <div className="p-6 max-w-4xl mx-auto">

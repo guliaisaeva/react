@@ -65,7 +65,7 @@ const MainPage: React.FC = () => {
 
         <SearchForm searchTerm={searchTerm} onSearch={handleSearch} />
 
-        {loading && <p>Loading films...</p>}
+        {loading && <p>Loading... Your adventure begins shortly!</p>}
         {error && <p className="text-red-600">Error: {error.message}</p>}
 
         {!loading && !error && (

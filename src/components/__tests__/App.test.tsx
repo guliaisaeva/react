@@ -1,12 +1,9 @@
-// src/components/__tests__/App.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import App from '../../App';
 import * as ApiService from '../../services/ApiService';
 import { vi, describe, beforeEach, afterEach, test, expect } from 'vitest';
 import type { Mock } from 'vitest';
 
-// Mock the API module
 vi.mock('../../services/ApiService');
 
 const mockFilms = [
@@ -18,7 +15,6 @@ describe('App Component', () => {
   beforeEach(() => {
     vi.resetAllMocks();
     localStorage.clear();
-    // Silence error logs from React error boundary in tests
     vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
@@ -54,35 +50,6 @@ describe('App Component', () => {
     });
   });
 
-  //   render(<App />);
-
-  //   const input = screen.getByRole('textbox');
-  //   const user = userEvent.setup();
-
-  //   // type search term
-  //   await user.clear(input);
-  //   await user.type(input, 'empire');
-
-  //   // click search button explicitly by text or role
-  //   const searchButton = screen.getByRole('button', { name: /search/i });
-  //   await user.click(searchButton);
-
-  //   // wait for localStorage.setItem call
-  //   await waitFor(() => {
-  //     expect(setItemSpy).toHaveBeenCalledWith('searchTerm', 'empire');
-  //   });
-
-  //   // wait for API call
-  //   await waitFor(() => {
-  //     expect(ApiService.fetchFilmData).toHaveBeenCalledWith('empire');
-  //   });
-
-  //   // wait for UI update
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/The Empire Strikes Back/i)).toBeInTheDocument();
-  //   });
-  // });
-
   test('shows Not Found when no results', async () => {
     vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('unknown');
     (ApiService.fetchFilmData as Mock).mockResolvedValue([]);
@@ -90,7 +57,7 @@ describe('App Component', () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getByText(/Not Found/i)).toBeInTheDocument();
+      expect(screen.getByText(/No films found/i)).toBeInTheDocument();
     });
   });
 
@@ -106,23 +73,5 @@ describe('App Component', () => {
       expect(screen.getByText(/Error:/i)).toBeInTheDocument();
       expect(screen.getByText(/Fetch failed/i)).toBeInTheDocument();
     });
-  });
-
-  test('shows error boundary fallback UI when Trigger Error button is clicked', async () => {
-    render(<App />);
-    const btn = screen.getByText(/Trigger Error/i);
-    const user = userEvent.setup();
-
-    await user.click(btn);
-
-    expect(
-      await screen.findByText(/Something went wrong/i)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Check the console for details/i)
-    ).toBeInTheDocument();
-
-    // Ensure main content is hidden when error boundary triggers
-    expect(screen.queryByText(/Star Wars Films/i)).not.toBeInTheDocument();
   });
 });

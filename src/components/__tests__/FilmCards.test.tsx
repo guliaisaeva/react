@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import FilmCards from '../FilmCards';
 import type { Film } from '../types/types';
 import { describe, expect, test } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('FilmCards', () => {
   const films: Film[] = [
@@ -32,7 +33,11 @@ describe('FilmCards', () => {
   ];
 
   test('renders film cards with correct information', () => {
-    render(<FilmCards films={films} />);
+    render(
+      <MemoryRouter>
+        <FilmCards films={films} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('A New Hope')).toBeInTheDocument();
     expect(screen.getByText('The Empire Strikes Back')).toBeInTheDocument();
     expect(screen.getByText(/Director: George Lucas/)).toBeInTheDocument();
@@ -43,7 +48,11 @@ describe('FilmCards', () => {
   });
 
   test('renders empty container when no films', () => {
-    const { container } = render(<FilmCards films={[]} />);
+    const { container } = render(
+      <MemoryRouter>
+        <FilmCards films={[]} />
+      </MemoryRouter>
+    );
     expect(container.querySelector('.card-container')).toBeInTheDocument();
     expect(container.querySelectorAll('.card').length).toBe(0);
   });

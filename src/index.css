@@ -116,3 +116,44 @@ button:focus-visible {
  padding: 1rem;
  border-radius: 0.5rem;
 }
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.detail{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-align: justify;
+}
+.btn {
+  background-color: #134441;
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(19, 68, 65, 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #1a5c57;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  background-color: #0f332f;
+  transform: translateY(0);
+}
+.about{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

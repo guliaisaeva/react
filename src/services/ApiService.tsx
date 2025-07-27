@@ -4,13 +4,11 @@ export async function fetchFilmData(searchQuery: string): Promise<Film[]> {
   try {
     const apiUrl = `https://swapi.py4e.com/api/films/?search=${searchQuery}`;
     const response = await fetch(apiUrl);
-
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (data.results && Array.isArray(data.results)) {
       return data.results as Film[];

@@ -1,28 +1,8 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from 'react-router-dom';
-
-import Navbar from './Navbar';
-
-const AppLayout: React.FC = () => (
-  <>
-    <Navbar />
-    <Outlet />
-  </>
-);
+import Dashboard from './components/pages/Dashboard';
 
 const App: React.FC = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<AppLayout />}></Route>
-      </Routes>
-    </Router>
-  );
+  return <Dashboard />;
 };
 
 export default App;

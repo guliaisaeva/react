@@ -7,29 +7,25 @@ export type Item = {
   detailsUrl: string;
 };
 
-type Store = {
+type SelectedItemsState = {
   selectedItems: Item[];
-  selectItem: (item: Item) => void;
-  unselectItem: (id: string) => void;
-  isItemSelected: (id: string) => boolean;
+  toggleItem: (item: Item) => void;
   clearAll: () => void;
+  isSelected: (id: string) => boolean;
 };
 
-export const useSelectedItemsStore = create<Store>((set, get) => ({
+export const useSelectedItemsStore = create<SelectedItemsState>((set, get) => ({
   selectedItems: [],
-  selectItem: (item) => {
+  toggleItem: (item) => {
     const { selectedItems } = get();
-    if (!selectedItems.find((i) => i.id === item.id)) {
+    console.log(selectedItems);
+    const exists = selectedItems.find((i) => i.id === item.id);
+    if (exists) {
+      set({ selectedItems: selectedItems.filter((i) => i.id !== item.id) });
+    } else {
       set({ selectedItems: [...selectedItems, item] });
     }
   },
-  unselectItem: (id) => {
-    set((state) => ({
-      selectedItems: state.selectedItems.filter((item) => item.id !== id),
-    }));
-  },
-  isItemSelected: (id) => {
-    return get().selectedItems.some((item) => item.id === id);
-  },
   clearAll: () => set({ selectedItems: [] }),
+  isSelected: (id) => get().selectedItems.some((i) => i.id === id),
 }));

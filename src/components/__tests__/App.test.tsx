@@ -1,20 +1,21 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { describe, expect, it } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../../App';
 
-describe('ThemeSwitcher functionality', () => {
-  it('toggles between light and dark mode', () => {
-    render(<App />);
+test('toggles theme correctly', () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
 
-    const select = screen.getByRole('combobox');
+  const button = screen.getByRole('button', { name: /toggle theme/i });
 
-    expect(document.documentElement.classList.contains('dark')).toBe(false);
+  expect(document.documentElement.classList.contains('dark')).toBe(false);
 
-    fireEvent.change(select, { target: { value: 'dark' } });
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
+  fireEvent.click(button);
+  expect(document.documentElement.classList.contains('dark')).toBe(true);
 
-    fireEvent.change(select, { target: { value: 'light' } });
-    expect(document.documentElement.classList.contains('dark')).toBe(false);
-  });
+  fireEvent.click(button);
+  expect(document.documentElement.classList.contains('dark')).toBe(false);
 });

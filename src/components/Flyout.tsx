@@ -8,8 +8,11 @@ export function Flyout() {
 
   return (
     <div className="flyout-container">
-      <span className="flyout-text">{selectedItems.length} </span>
-      <span>item{selectedItems.length > 1 ? 's' : ''} selected</span>
+      <span className="flyout-text">
+        {selectedItems.length} Flower{selectedItems.length > 1 ? 's' : ''}{' '}
+        selected
+      </span>
+
       <div className="flyout-buttons">
         <button onClick={clearAll}>Unselect All</button>
         <button onClick={() => downloadCSV(selectedItems)}>Download</button>

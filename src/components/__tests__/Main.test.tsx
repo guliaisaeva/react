@@ -25,8 +25,13 @@ describe('main.tsx', () => {
     );
     expect(renderMock).toHaveBeenCalled();
 
-    const renderArg = renderMock.mock.calls[0][0];
-    expect(renderArg.type).toBe(React.StrictMode);
-    expect(renderArg.props.children.type.name).toBe('App');
+    const strictModeWrapper = renderMock.mock.calls[0][0];
+    expect(strictModeWrapper.type).toBe(React.StrictMode);
+
+    const browserRouterWrapper = strictModeWrapper.props.children;
+    expect(browserRouterWrapper.type.name).toBe('BrowserRouter');
+
+    const appComponent = browserRouterWrapper.props.children;
+    expect(appComponent.type.name).toBe('App');
   });
 });

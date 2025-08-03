@@ -130,7 +130,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 320px;
+  width: 350px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   user-select: none;
@@ -139,7 +139,6 @@ input[type="checkbox"] {
 }
 
 .flyout-text {
-  font-size: 1.5rem;
   font-weight: 600;
   color: red;
 }

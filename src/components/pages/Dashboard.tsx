@@ -22,6 +22,7 @@ export default function Dashboard() {
         >
           <input
             type="checkbox"
+            aria-label={`Select ${item.name}`}
             checked={isSelected(item.id)}
             onClick={(e) => e.stopPropagation()}
             onChange={() => toggleItem(item)}

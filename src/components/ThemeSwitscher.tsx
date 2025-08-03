@@ -3,16 +3,23 @@ import { useTheme } from './context/ThemeContext';
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <div className="p-4">
-      <label>Theme: </label>
-      <select
-        value={theme}
-        onChange={(e) => setTheme(e.target.value as 'light' | 'dark')}
-      >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
-    </div>
+    <button
+      aria-label="Toggle theme"
+      className={`toggle-switch ${theme}`}
+      onClick={toggleTheme}
+    >
+      <div className="toggle-thumb" />
+      <span className="icon sun" aria-hidden="true">
+        ☀️
+      </span>
+      <span className="icon moon" aria-hidden="true">
+        🌙
+      </span>
+    </button>
   );
 }

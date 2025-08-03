@@ -1,25 +1,35 @@
+import { useNavigate } from 'react-router-dom';
 import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
 
-const mockItems = [...Array(10)].map((_, i) => ({
+const mockItems = [...Array(12)].map((_, i) => ({
   id: i.toString(),
-  name: `Item ${i + 1}`,
+  name: `Flower ${i + 1}`,
   description: `Description ${i + 1}`,
   detailsUrl: `/details/${i + 1}`,
 }));
 
 export default function Dashboard() {
   const { toggleItem, isSelected } = useSelectedItemsStore();
+  const navigate = useNavigate();
 
   return (
-    <div className="p-4">
+    <div className="dashboard">
       {mockItems.map((item) => (
-        <div key={item.id} className="flex gap-2">
+        <div
+          key={item.id}
+          className={`card ${isSelected(item.id) ? 'selected' : ''}`}
+          onClick={() => navigate(item.detailsUrl)}
+        >
           <input
             type="checkbox"
             checked={isSelected(item.id)}
+            onClick={(e) => e.stopPropagation()}
             onChange={() => toggleItem(item)}
           />
-          <span>{item.name}</span>
+          <div className="text-container">
+            <h3 className="title">{item.name}</h3>
+            <p className="description">{item.description}</p>
+          </div>
         </div>
       ))}
     </div>

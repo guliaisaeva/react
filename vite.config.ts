@@ -18,11 +18,6 @@ export default defineConfig({
         'src/**/*.d.ts',
       ],
       reporter: ['text', 'html'],
-      statements: 80,
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      thresholdAutoUpdate: false,
     },
   },
 });

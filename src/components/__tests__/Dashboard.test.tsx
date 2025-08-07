@@ -1,8 +1,22 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Dashboard from '../pages/Dashboard';
 import { BrowserRouter } from 'react-router-dom';
+
+vi.mock('../hooks/usePhotos', () => ({
+  usePhotos: () => ({
+    data: Array.from({ length: 12 }, (_, i) => ({
+      id: i + 1,
+      title: `Photo ${i + 1}`,
+      url: `https://example.com/photo${i + 1}.jpg`,
+      thumbnailUrl: `https://example.com/thumb${i + 1}.jpg`,
+    })),
+    isLoading: false,
+    isError: false,
+    refetch: vi.fn(),
+  }),
+}));
 
 beforeEach(() => {
   const { clearAll } = useSelectedItemsStore.getState();

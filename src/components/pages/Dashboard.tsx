@@ -35,7 +35,7 @@ export default function Dashboard() {
             }
           />
           <div className="text-container">
-            <img src={item.thumbnailUrl} alt={item.title} />
+            <img src={item.url} width={200} height={200} alt={item.title} />
             <h3 className="title">{item.title}</h3>
           </div>
         </div>

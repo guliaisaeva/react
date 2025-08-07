@@ -3,6 +3,21 @@ import ReactDOM from 'react-dom/client';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 
 vi.mock('react-dom/client');
+vi.mock('../components/hooks/usePhotos', () => ({
+  usePhotos: () => ({
+    data: [
+      {
+        id: '1',
+        title: 'Test Photo',
+        thumbnailUrl: 'test.jpg',
+        url: 'test.jpg',
+      },
+    ],
+    isLoading: false,
+    isError: false,
+    refetch: vi.fn(),
+  }),
+}));
 
 describe('main.tsx', () => {
   let createRootMock: ReturnType<typeof vi.fn>;

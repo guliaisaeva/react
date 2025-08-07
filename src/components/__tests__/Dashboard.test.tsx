@@ -52,10 +52,10 @@ describe('Dashboard component', () => {
     expect(firstCheckbox).toBeChecked();
 
     const isSelected = useSelectedItemsStore.getState().isSelected;
-    expect(isSelected('0')).toBe(true);
+    expect(isSelected('1')).toBe(true);
 
     fireEvent.click(firstCheckbox);
     expect(firstCheckbox).not.toBeChecked();
-    expect(isSelected('0')).toBe(false);
+    expect(isSelected('1')).toBe(false);
   });
 });

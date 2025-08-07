@@ -31,7 +31,10 @@ describe('main.tsx', () => {
     const browserRouterWrapper = strictModeWrapper.props.children;
     expect(browserRouterWrapper.type.name).toBe('BrowserRouter');
 
-    const appComponent = browserRouterWrapper.props.children;
+    const queryClientProviderWrapper = browserRouterWrapper.props.children;
+    expect(queryClientProviderWrapper.type.name).toBe('QueryClientProvider');
+
+    const appComponent = queryClientProviderWrapper.props.children;
     expect(appComponent.type.name).toBe('App');
   });
 });

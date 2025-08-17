@@ -1,17 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import * as usePhotosModule from '../hooks/usePhotos';
-import DetailPage from '../pages/DetailPage';
 import { vi } from 'vitest';
-import { UseQueryResult } from '@tanstack/react-query';
-import type { Photo } from '../hooks/usePhotos';
+import * as usePhotosHook from '../../components/hooks/usePhotos';
 
-const mockData: Photo = {
-  albumId: 1,
+import * as nextNavigation from 'next/navigation';
+import ClientPhotoDetail from '../../app/details/[id]/ClientPhotoDetail';
+import { UseQueryResult } from '@tanstack/react-query';
+
+const mockData = {
   id: 5,
-  title: 'Photo 5',
+  author: 'Photo 5',
   url: 'https://example.com/photo5.jpg',
-  thumbnailUrl: 'https://example.com/thumb5.jpg',
+  download_url: 'https://example.com/photo5.jpg',
 };
 
 const mockUsePhotoByIdResult = {
@@ -20,23 +19,19 @@ const mockUsePhotoByIdResult = {
   isError: false,
   isSuccess: true,
   refetch: vi.fn(),
-} as unknown as UseQueryResult<Photo, Error>;
+} as unknown as UseQueryResult<usePhotosHook.Photo, Error>;
 
-describe('DetailPage', () => {
-  beforeEach(() =>
-    vi
-      .spyOn(usePhotosModule, 'usePhotoById')
-      .mockReturnValue(mockUsePhotoByIdResult)
-  );
+vi.spyOn(nextNavigation, 'useRouter').mockReturnValue({
+  back: vi.fn(),
+} as unknown as ReturnType<typeof nextNavigation.useRouter>);
 
-  it('renders photo detail and back button works', () => {
-    render(
-      <MemoryRouter initialEntries={['/details/5']}>
-        <Routes>
-          <Route path="/details/:id" element={<DetailPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+vi.spyOn(nextNavigation, 'usePathname').mockReturnValue('/details/5');
+
+vi.spyOn(usePhotosHook, 'usePhotoById').mockReturnValue(mockUsePhotoByIdResult);
+
+describe('ClientPhotoDetail', () => {
+  it('renders photo details and back button works', () => {
+    render(<ClientPhotoDetail />);
 
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
       'Photo 5'
@@ -47,5 +42,7 @@ describe('DetailPage', () => {
     expect(backButton).toBeInTheDocument();
 
     fireEvent.click(backButton);
+    const router = nextNavigation.useRouter();
+    expect(router.back).toHaveBeenCalled();
   });
 });

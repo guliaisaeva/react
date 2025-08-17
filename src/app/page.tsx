@@ -1,5 +1,5 @@
-import { Flyout } from '../components/Flyout';
 import Dashboard from '../components/Dashboard';
+import { Flyout } from '../components/Flyout';
 
 export default function HomePage() {
   return (

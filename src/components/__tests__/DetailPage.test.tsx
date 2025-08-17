@@ -4,40 +4,23 @@ import * as usePhotosModule from '../hooks/usePhotos';
 import DetailPage from '../pages/DetailPage';
 import { vi } from 'vitest';
 import { UseQueryResult } from '@tanstack/react-query';
+import type { Photo } from '../hooks/usePhotos';
 
-const mockData = { id: '5', title: 'Photo 5' };
-
-const mockUsePhotoByIdResult: UseQueryResult<
-  { id: string; title: string },
-  Error
-> = {
-  status: 'success',
-  data: mockData,
-  error: null,
-  isLoading: false,
-  isError: false as const,
-  isFetching: false,
-  isSuccess: true,
-  failureReason: null,
-  errorUpdateCount: 0,
-  isFetched: true,
-  isFetchedAfterMount: true,
-  isRefetching: false,
-  isLoadingError: false,
-  isRefetchError: false,
-  isPaused: false,
-  isInitialLoading: false,
-  isPlaceholderData: false,
-  isPending: false as const,
-  isStale: false,
-  dataUpdatedAt: 0,
-  errorUpdatedAt: 0,
-  failureCount: 0,
-  fetchStatus: 'idle',
-  isEnabled: true,
-  promise: Promise.resolve(mockData),
-  refetch: vi.fn(),
+const mockData: Photo = {
+  albumId: 1,
+  id: 5,
+  title: 'Photo 5',
+  url: 'https://example.com/photo5.jpg',
+  thumbnailUrl: 'https://example.com/thumb5.jpg',
 };
+
+const mockUsePhotoByIdResult = {
+  data: mockData,
+  isLoading: false,
+  isError: false,
+  isSuccess: true,
+  refetch: vi.fn(),
+} as unknown as UseQueryResult<Photo, Error>;
 
 describe('DetailPage', () => {
   beforeEach(() =>

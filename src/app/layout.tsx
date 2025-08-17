@@ -6,6 +6,7 @@ import { ThemeProvider } from '../components/context/ThemeContext';
 import { ThemeSwitcher } from '../components/ThemeSwitscher';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n';
+import { LanguageSwitcher } from '../components/LanguageSwitscher';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <div className="app-container">
               <div className="theme-switcher-wrapper">
                 <ThemeSwitcher />
+                <LanguageSwitcher />
               </div>
               <main>
                 {' '}

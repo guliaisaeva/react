@@ -1,8 +1,10 @@
+'use client';
+
 import { render, screen, fireEvent } from '@testing-library/react';
-import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Dashboard from '../Dashboard';
-import { BrowserRouter } from 'react-router-dom';
+import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 vi.mock('../hooks/usePhotos', () => ({
   usePhotos: () => ({
@@ -18,17 +20,29 @@ vi.mock('../hooks/usePhotos', () => ({
   }),
 }));
 
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
+
+vi.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: JSX.IntrinsicElements['img']) => <img {...props} />,
+}));
+
 beforeEach(() => {
-  const { clearAll } = useSelectedItemsStore.getState();
-  clearAll();
+  useSelectedItemsStore.getState().clearAll();
 });
 
 describe('Dashboard component', () => {
   it('renders all items with unchecked checkboxes initially', () => {
+    const queryClient = new QueryClient();
+
     render(
-      <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
         <Dashboard />
-      </BrowserRouter>
+      </QueryClientProvider>
     );
 
     const checkboxes = screen.getAllByRole('checkbox');
@@ -39,15 +53,15 @@ describe('Dashboard component', () => {
   });
 
   it('checks and unchecks items when clicked', () => {
+    const queryClient = new QueryClient();
+
     render(
-      <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
         <Dashboard />
-      </BrowserRouter>
+      </QueryClientProvider>
     );
 
     const firstCheckbox = screen.getAllByRole('checkbox')[0];
-    expect(firstCheckbox).not.toBeChecked();
-
     fireEvent.click(firstCheckbox);
     expect(firstCheckbox).toBeChecked();
 

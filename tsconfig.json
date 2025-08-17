@@ -2,10 +2,17 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["vitest", "node"],    
+    "types": [
+      "vitest",
+      "node"
+    ],
     "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -13,13 +20,31 @@
     "noEmit": true,
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
-
     "noImplicitAny": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
- "include": ["src", "src/setupTests.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src",
+    "src/setupTests.ts",
+    ".next/types/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

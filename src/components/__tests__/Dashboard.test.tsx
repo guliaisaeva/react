@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import Dashboard from '../pages/Dashboard';
+import Dashboard from '../Dashboard';
 import { BrowserRouter } from 'react-router-dom';
 
 vi.mock('../hooks/usePhotos', () => ({

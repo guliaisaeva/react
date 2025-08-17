@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
 
     "noImplicitAny": true,
     "strict": true,

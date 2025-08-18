@@ -1,0 +1,226 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/index.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+:root {
+  --bg-color: rgb(180, 207, 223);
+  --text-color: black;
+}
+
+.dark {
+  --bg-color: #111;
+  --text-color: white;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+.dashboard {
+  padding: 16px; 
+  font-family: Arial, sans-serif;
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;  
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.theme-switcher-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.item {
+  display: flex;
+  gap: 8px; 
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.item span {
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.toggle-switch {
+  position: relative;
+  width: 70px;
+  height: 36px;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  border-radius: 36px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 0 8px rgba(255, 255, 255, 0.7),
+    0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.4s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.toggle-switch.dark {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow:
+    inset 0 0 8px rgba(0, 0, 0, 0.5),
+    0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch .icon {
+  font-size: 18px;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: white;
+  text-shadow: 0 0 2px rgba(0,0,0,0.25);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.toggle-switch.light .moon {
+  opacity: 0.3;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
+  z-index: 0;}
+
+.toggle-switch.dark .sun {
+   opacity: 0.3;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
+  z-index: 0;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0;
+}
+
+.toggle-switch.dark .toggle-thumb {
+  left: 37px;
+}
+
+.flyout-container {
+  background-color: #2c3e50; 
+  color: #ecf0f1; 
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 350px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  z-index: 9999;
+  margin-top: 2rem;
+}
+
+.flyout-text {
+  font-weight: 600;
+  color: red;
+}
+
+.flyout-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.flyout-buttons button {
+  background-color: #34495e; 
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  color: #ecf0f1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.flyout-buttons button:hover {
+  background-color: #1abc9c; 
+  color: white;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
+  gap: 16px;
+  padding: 16px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.card.selected {
+  border-color: #4caf50;
+  background-color: #e8f5e9;
+}
+
+.card input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+.card .text-container {
+  flex: 1 1;
+}
+
+.card .title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e7d32;
+  text-decoration: underline;
+}
+
+.card .description {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #555;
+}
+.theme-switcher-wrapper{
+  display: flex;
+  gap: 1rem;
+}

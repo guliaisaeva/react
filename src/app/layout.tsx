@@ -7,8 +7,13 @@ import { ThemeSwitcher } from '../components/ThemeSwitscher';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n';
 import { LanguageSwitcher } from '../components/LanguageSwitscher';
+import { useTranslation } from 'react-i18next';
 
 const queryClient = new QueryClient();
+function Greeting() {
+  const { t } = useTranslation();
+  return <div>{t('greeting')}</div>;
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -21,9 +26,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <ThemeSwitcher />
                 <LanguageSwitcher />
               </div>
+
               <main>
                 {' '}
-                <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+                <I18nextProvider i18n={i18n}>
+                  <Greeting />
+                  {children}
+                </I18nextProvider>
               </main>
             </div>
           </ThemeProvider>

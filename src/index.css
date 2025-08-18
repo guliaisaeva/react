@@ -210,3 +210,7 @@ input[type="checkbox"] {
   font-size: 14px;
   color: #555;
 }
+.theme-switcher-wrapper{
+  display: flex;
+  gap: 1rem;
+}

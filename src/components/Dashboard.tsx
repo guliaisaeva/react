@@ -1,10 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { useSelectedItemsStore } from '../../stores/selectedItemsStore';
-import { usePhotos } from '../hooks/usePhotos';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useSelectedItemsStore } from '../stores/selectedItemsStore';
+import Image from 'next/image';
+import { usePhotos } from './hooks/usePhotos';
 
 export default function Dashboard() {
   const { toggleItem, isSelected } = useSelectedItemsStore();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { data, isLoading, isError, refetch } = usePhotos();
 
   if (isLoading) return <p>Loading photos...</p>;
@@ -18,25 +21,25 @@ export default function Dashboard() {
         <div
           key={item.id}
           className={`card ${isSelected(item.id.toString()) ? 'selected' : ''}`}
-          onClick={() => navigate(`/details/${item.id}`)}
+          onClick={() => router.push(`/details/${item.id}`)}
         >
           <input
             type="checkbox"
-            aria-label={`Select ${item.title}`}
+            aria-label={`Select ${item.author}`}
             checked={isSelected(item.id.toString())}
             onClick={(e) => e.stopPropagation()}
             onChange={() =>
               toggleItem({
                 id: item.id.toString(),
-                name: item.title,
+                name: item.author,
                 description: item.url,
                 detailsUrl: `/details/${item.id}`,
               })
             }
           />
           <div className="text-container">
-            <img src={item.url} width={200} height={200} alt={item.title} />
-            <h3 className="title">{item.title}</h3>
+            <Image src={item.url} alt={item.author} width={200} height={200} />
+            <h3 className="title">{item.author}</h3>
           </div>
         </div>
       ))}

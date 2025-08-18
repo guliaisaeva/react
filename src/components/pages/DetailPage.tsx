@@ -13,7 +13,7 @@ export default function DetailPage() {
     <div style={{ padding: '1rem' }}>
       <h2>{data.title}</h2>
       <p style={{ fontSize: '18px' }}>
-        This is detail for <strong>Photo {id}</strong>.
+        This is detail for <strong> {id}</strong>.
       </p>
 
       <button

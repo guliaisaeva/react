@@ -1,20 +1,35 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import DetailPage from '../pages/DetailPage';
-import { describe, it, expect } from 'vitest';
+import { vi } from 'vitest';
+import ClientPhotoDetail from '../../app/details/[id]/ClientPhotoDetail';
 
-describe('DetailPage', () => {
-  it('renders flower detail and back button works', () => {
-    render(
-      <MemoryRouter initialEntries={['/details/5']}>
-        <Routes>
-          <Route path="/details/:id" element={<DetailPage />} />
-        </Routes>
-      </MemoryRouter>
+const mockPhoto = {
+  id: 5,
+  author: 'Photo 5',
+  url: 'https://example.com/photo5.jpg',
+  download_url: 'https://example.com/photo5.jpg',
+};
+
+vi.mock('../hooks/usePhotos', () => ({
+  usePhotoById: () => ({
+    data: mockPhoto,
+    isLoading: false,
+    isError: false,
+    isSuccess: true,
+    refetch: vi.fn(),
+  }),
+}));
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ back: vi.fn() }),
+  usePathname: () => '/details/5',
+}));
+describe('ClientPhotoDetail', () => {
+  it('renders photo and back button', () => {
+    render(<ClientPhotoDetail />);
+
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+      'Photo 5'
     );
-
-    expect(screen.getByText(/Flower 5/i)).toBeInTheDocument();
-    expect(screen.getByText(/This is detail for/i)).toBeInTheDocument();
 
     const backButton = screen.getByRole('button', { name: /back/i });
     expect(backButton).toBeInTheDocument();

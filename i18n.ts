@@ -1,14 +1,16 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import nextI18NextConfig from './next-i18next.config';
+import { i18n as nextI18nConfig } from './next-i18next.config.mjs';
+import trCommon from './src/public/locales/tr.json';
+import enCommon from './src/public/locales/en.json';
 
 i18n.use(initReactI18next).init({
-  ...nextI18NextConfig.i18n,
+  ...nextI18nConfig,
   fallbackLng: 'tr',
   interpolation: { escapeValue: false },
   resources: {
-    tr: { common: require('public/locales/tr/common.json') },
-    en: { common: require('public/locales/en/common.json') },
+    tr: { common: trCommon },
+    en: { common: enCommon },
   },
 });
 

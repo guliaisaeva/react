@@ -13,8 +13,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "@reduxjs/toolkit": "^2.8.2",
+    "install": "^0.13.0",
+    "npm": "^11.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.62.0",
+    "react-redux": "^9.2.0",
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

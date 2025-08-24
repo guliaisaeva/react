@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFormData } from '../store/formSlice';
-import { RootState } from '../store';
+import { RootState } from './store';
+import { addFormData } from './store/formSlice';
 
 interface UncontrolledFormProps {
   onSuccess: () => void;
@@ -11,7 +11,6 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
   const dispatch = useDispatch();
   const countries = useSelector((state: RootState) => state.countries);
 
-  // Refs for form fields
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -24,7 +23,6 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // Simple validation function (expand as needed)
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
     const name = nameRef.current?.value || '';
@@ -47,8 +45,6 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
     if (!terms) newErrors.terms = 'You must accept the terms.';
     if (!country) newErrors.country = 'Country is required.';
 
-    // Add more validation as needed
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -56,9 +52,6 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-
-    // Convert image to base64 (implement this utility separately)
-    // const imageBase64 = await toBase64(imageRef.current?.files?.[0]);
 
     dispatch(
       addFormData({
@@ -68,7 +61,7 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
         password: passwordRef.current?.value || '',
         gender: genderRef.current?.value || '',
         acceptTerms: termsRef.current?.checked || false,
-        imageBase64: '', // Add image conversion here
+        imageBase64: '',
         country: countryRef.current?.value || '',
       })
     );
@@ -131,7 +124,6 @@ const UncontrolledForm: React.FC<UncontrolledFormProps> = ({ onSuccess }) => {
           accept="image/png, image/jpeg"
           ref={imageRef}
         />
-        {/* Add image validation and preview */}
       </div>
       <div>
         <label>

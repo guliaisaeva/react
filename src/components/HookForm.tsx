@@ -22,7 +22,7 @@ interface FormInputs {
   image?: FileList;
 }
 
-const schema: yup.Schema<FormInputs> = yup.object({
+const schema: yup.ObjectSchema<FormInputs> = yup.object({
   name: yup
     .string()
     .matches(/^[A-Z][a-zA-Z]*$/, 'Name must start with an uppercase letter.')

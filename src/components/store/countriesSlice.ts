@@ -12,7 +12,8 @@ const initialState: string[] = [
   'Japan',
   'China',
   'India',
-  'Brazil'];
+  'Brazil',
+];
 
 const countriesSlice = createSlice({
   name: 'countries',

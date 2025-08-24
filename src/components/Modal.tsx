@@ -10,7 +10,6 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close on ESC
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -20,14 +19,12 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
-  // Close on click outside
   const handleClickOutside = (e: React.MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
   };
 
-  // Focus management
   useEffect(() => {
     if (open && modalRef.current) {
       modalRef.current.focus();

@@ -73,12 +73,12 @@ const HookForm: React.FC<HookFormProps> = ({ onSuccess }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
     watch,
   } = useForm<FormInputs>({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'all',
     defaultValues: {
       name: '',
       age: undefined,
@@ -225,9 +225,7 @@ const HookForm: React.FC<HookFormProps> = ({ onSuccess }) => {
           <div style={{ color: 'red' }}>{errors.acceptTerms.message}</div>
         )}
       </div>
-      <button type="submit" disabled={!isValid}>
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
   );
 };

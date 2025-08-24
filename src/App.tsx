@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from './components/Modal';
 import HookForm from './components/HookForm';
 import UncontrolledForm from './components/UncontrolledForm';
+import SubmittedForms from './components/SubmittedForms';
 
 const App: React.FC = () => {
   const [openHookForm, setOpenHookForm] = useState(false);
@@ -23,6 +24,8 @@ const App: React.FC = () => {
       <Modal open={openUncontrolled} onClose={() => setOpenUncontrolled(false)}>
         <UncontrolledForm onSuccess={() => setOpenUncontrolled(false)} />
       </Modal>
+      <h2>Submitted Data:</h2>
+      <SubmittedForms />
     </div>
   );
 };

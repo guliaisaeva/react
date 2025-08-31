@@ -10,10 +10,7 @@
     "format:fix": "prettier --write \"**/*.{ts,tsx,json,md}\"",
     "preview": "vite preview",
     "test": "",
-    "prepare": "husky install",
-    "jest": {
-  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"]
-}
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",

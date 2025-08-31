@@ -1,4 +1,3 @@
-
 let dataPromise: Promise<unknown> | null = null;
 let dataCache: unknown = null;
 
